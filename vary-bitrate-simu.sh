@@ -44,8 +44,8 @@ while read -r -a SIZES; do
   ~/5gdeploy-scenario/20230817/iperf3.sh clients
 for i in $(seq 1 $max_iteration); do
   ~/5gdeploy-scenario/20230817/iperf3.sh wait > e1.log
-  ~/5gdeploy-scenario/20230817/iperf3.sh collect
-  ~/5gdeploy-scenario/20230817/iperf3.sh stop
+#  ~/5gdeploy-scenario/20230817/iperf3.sh collect
+#  ~/5gdeploy-scenario/20230817/iperf3.sh stop
   while read -r -a SIZES; do
     result=${SIZES[0]}
     if [[ $result -eq 1 ]]
@@ -68,8 +68,8 @@ for i in $(seq 1 $max_iteration); do
   fi
 done
 
-#  ~/5gdeploy-scenario/20230817/iperf3.sh collect
-#  ~/5gdeploy-scenario/20230817/iperf3.sh stop
+  ~/5gdeploy-scenario/20230817/iperf3.sh collect
+  ~/5gdeploy-scenario/20230817/iperf3.sh stop
   ~/5gdeploy-scenario/20230817/iperf3.sh each iperf3/*.json >> results.txt
   ~/5gdeploy-scenario/20230817/iperf3.sh total iperf3/internet_21*.json >> results.txt
   ~/5gdeploy-scenario/20230817/iperf3.sh total iperf3/internet_22*.json >> results.txt
