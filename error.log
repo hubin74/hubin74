@@ -10,3 +10,11 @@ Internal Error: Server answered with HTTP 503 when performing the request to htt
     at Readable.read (node:internal/streams/readable:758:10)
     at Socket.read (node:net:771:39)
     at flow (node:internal/streams/readable:1248:53)
+
+ERROR: failed to solve: alpine:3.18: failed to authorize: failed to fetch anonymous token: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Falpine%3Apull&service=registry.docker.io": Service Unavailable
+
+ERROR: failed to solve: free5gc/upf:v3.3.0: failed to do request: Head "https://registry-1.docker.io/v2/free5gc/upf/manifests/v3.3.0": Service Unavailable
+
+ERROR: failed to solve: buildpack-deps:jammy: failed to do request: Head "https://registry-1.docker.io/v2/library/buildpack-deps/manifests/jammy": Service Unavailable
+
+ERROR: failed to solve: ubuntu:22.04: failed to do request: Head "https://registry-1.docker.io/v2/library/ubuntu/manifests/22.04": Service Unavailable
