@@ -1,0 +1,12 @@
+[5gdeploy] Installing 5gdeploy
+Internal Error: Server answered with HTTP 503 when performing the request to https://registry.npmjs.org/pnpm/-/pnpm-8.12.1.tgz; for troubleshooting help, see https://github.com/nodejs/corepack#troubleshooting
+    at ClientRequest.<anonymous> (/usr/lib/node_modules/corepack/dist/lib/corepack.cjs:42192:21)
+    at Object.onceWrapper (node:events:629:26)
+    at ClientRequest.emit (node:events:514:28)
+    at HTTPParser.parserOnIncomingClient (node:_http_client:693:27)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+    at Socket.socketOnData (node:_http_client:535:22)
+    at Socket.emit (node:events:514:28)
+    at Readable.read (node:internal/streams/readable:758:10)
+    at Socket.read (node:net:771:39)
+    at flow (node:internal/streams/readable:1248:53)
