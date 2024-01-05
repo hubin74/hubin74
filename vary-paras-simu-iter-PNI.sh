@@ -50,3 +50,40 @@ shift 2
 
 #PARAMS=''
 #for PARAM in "$@"; do
+#  PARAMS="$PARAMS \"${PARAM//\"/\\\"}\""
+#done
+
+#  alias 5giperf3='$FIVEGIPERF3'
+
+cd ~/compose/20231017
+while read -r -a SIZES; do
+  VCAMDL=${SIZES[0]}
+  VCTLUL=${SIZES[1]}
+  INETUL=${SIZES[2]}
+  INETDL=${SIZES[3]}
+  DURATION=${SIZES[4]}
+  KEY1=${VCAMDL}-${VCTLUL}-${INETUL}-${INETDL}-${DURATION}
+  $FIVEGIPERF3 init
+  # $FIVEGIPERF3 add internet "^ue1" 10.1.0.0/16 21000 -t $DURATION -u -b ${INETUL}
+  env D5G_DNCPUSET=4-7 $FIVEGIPERF3 add internet "^ue1" 10.1.0.0/16 22000 -t $DURATION -u -b ${INETDL} -R
+  # $FIVEGIPERF3 add vcam "^ue4" 10.140.0.0/16 24000 -t $DURATION -u -b ${VCAMDL}
+  env D5G_DNCPUSET=4-7 $FIVEGIPERF3 add vctl "^ue4" 10.141.0.0/16 25000 -t $DURATION -u -b ${VCTLUL} -R
+for i in $(seq 1 $max_iteration); do
+  $FIVEGIPERF3 servers; sleep 5
+  $FIVEGIPERF3 clients
+  $FIVEGIPERF3 wait > e1.log
+  $FIVEGIPERF3 collect
+  $FIVEGIPERF3 stop
+  set +e
+  $FIVEGIPERF3 each iperf3/*.json >> $R/results.txt
+  $FIVEGIPERF3 total iperf3/internet_21*.json >> $R/results.txt
+  $FIVEGIPERF3 total iperf3/internet_22*.json >> $R/results.txt
+  $FIVEGIPERF3 total iperf3/vcam_24*.json >> $R/results.txt
+  $FIVEGIPERF3 total iperf3/vctl_25*.json >> $R/results.txt
+  set -e
+  echo $KEY1-$i >> $R/results.txt
+  echo '' >> $R/results.txt
+  mv ./iperf3 $R/iperf3-${VCAMDL}-${VCTLUL}-${INETUL}-${INETDL}-${DURATION}-$i
+done
+
+done < $SIZES_FILE
