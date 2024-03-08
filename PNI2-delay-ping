@@ -267,3 +267,215 @@ PING 10.141.0.3 (10.141.0.3) from 172.25.192.4: 1390 data bytes
 --- 10.141.0.3 ping statistics ---
 50 packets transmitted, 49 packets received, 2% packet loss
 round-trip min/avg/max = 0.348/0.884/1.467 ms
+
+
+
+760-544-1180-1400
+Delay from UE to dn_internet
+bhu@dpdk3:~$ docker exec -it ue1000 ping -I 10.1.0.2 -c 50 -i 1 -s 1390 172.25.192.2
+PING 172.25.192.2 (172.25.192.2) from 10.1.0.2 : 1390(1418) bytes of data.
+1398 bytes from 172.25.192.2: icmp_seq=1 ttl=63 time=209 ms
+1398 bytes from 172.25.192.2: icmp_seq=2 ttl=63 time=210 ms
+1398 bytes from 172.25.192.2: icmp_seq=3 ttl=63 time=150 ms
+1398 bytes from 172.25.192.2: icmp_seq=4 ttl=63 time=79.2 ms
+1398 bytes from 172.25.192.2: icmp_seq=5 ttl=63 time=188 ms
+1398 bytes from 172.25.192.2: icmp_seq=6 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=8 ttl=63 time=86.6 ms
+1398 bytes from 172.25.192.2: icmp_seq=9 ttl=63 time=212 ms
+1398 bytes from 172.25.192.2: icmp_seq=10 ttl=63 time=205 ms
+1398 bytes from 172.25.192.2: icmp_seq=12 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=13 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=14 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=15 ttl=63 time=212 ms
+1398 bytes from 172.25.192.2: icmp_seq=16 ttl=63 time=142 ms
+1398 bytes from 172.25.192.2: icmp_seq=17 ttl=63 time=179 ms
+1398 bytes from 172.25.192.2: icmp_seq=18 ttl=63 time=220 ms
+1398 bytes from 172.25.192.2: icmp_seq=19 ttl=63 time=222 ms
+1398 bytes from 172.25.192.2: icmp_seq=20 ttl=63 time=210 ms
+1398 bytes from 172.25.192.2: icmp_seq=21 ttl=63 time=207 ms
+1398 bytes from 172.25.192.2: icmp_seq=22 ttl=63 time=216 ms
+1398 bytes from 172.25.192.2: icmp_seq=23 ttl=63 time=222 ms
+1398 bytes from 172.25.192.2: icmp_seq=24 ttl=63 time=219 ms
+1398 bytes from 172.25.192.2: icmp_seq=25 ttl=63 time=222 ms
+1398 bytes from 172.25.192.2: icmp_seq=26 ttl=63 time=137 ms
+1398 bytes from 172.25.192.2: icmp_seq=28 ttl=63 time=211 ms
+1398 bytes from 172.25.192.2: icmp_seq=29 ttl=63 time=220 ms
+1398 bytes from 172.25.192.2: icmp_seq=30 ttl=63 time=211 ms
+1398 bytes from 172.25.192.2: icmp_seq=31 ttl=63 time=218 ms
+1398 bytes from 172.25.192.2: icmp_seq=32 ttl=63 time=219 ms
+1398 bytes from 172.25.192.2: icmp_seq=33 ttl=63 time=213 ms
+1398 bytes from 172.25.192.2: icmp_seq=34 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=36 ttl=63 time=211 ms
+1398 bytes from 172.25.192.2: icmp_seq=37 ttl=63 time=216 ms
+1398 bytes from 172.25.192.2: icmp_seq=39 ttl=63 time=211 ms
+1398 bytes from 172.25.192.2: icmp_seq=40 ttl=63 time=213 ms
+1398 bytes from 172.25.192.2: icmp_seq=41 ttl=63 time=221 ms
+1398 bytes from 172.25.192.2: icmp_seq=42 ttl=63 time=209 ms
+1398 bytes from 172.25.192.2: icmp_seq=44 ttl=63 time=219 ms
+1398 bytes from 172.25.192.2: icmp_seq=45 ttl=63 time=215 ms
+1398 bytes from 172.25.192.2: icmp_seq=46 ttl=63 time=220 ms
+1398 bytes from 172.25.192.2: icmp_seq=48 ttl=63 time=212 ms
+1398 bytes from 172.25.192.2: icmp_seq=49 ttl=63 time=223 ms
+1398 bytes from 172.25.192.2: icmp_seq=50 ttl=63 time=215 ms
+
+--- 172.25.192.2 ping statistics ---
+50 packets transmitted, 43 received, 14% packet loss, time 49165ms
+rtt min/avg/max/mdev = 79.231/202.832/222.518/33.149 ms
+
+
+Delay from dn_internet to UE
+bhu@dpdk4:~$ docker exec -it dn_internet ping -I 172.25.192.2 -c 50 -i 1 -s 1390 10.1.0.2
+PING 10.1.0.2 (10.1.0.2) from 172.25.192.2: 1390 data bytes
+1398 bytes from 10.1.0.2: seq=1 ttl=63 time=216.790 ms
+1398 bytes from 10.1.0.2: seq=2 ttl=63 time=85.271 ms
+1398 bytes from 10.1.0.2: seq=4 ttl=63 time=214.186 ms
+1398 bytes from 10.1.0.2: seq=5 ttl=63 time=209.081 ms
+1398 bytes from 10.1.0.2: seq=6 ttl=63 time=212.104 ms
+1398 bytes from 10.1.0.2: seq=7 ttl=63 time=216.086 ms
+1398 bytes from 10.1.0.2: seq=12 ttl=63 time=166.248 ms
+1398 bytes from 10.1.0.2: seq=13 ttl=63 time=220.734 ms
+1398 bytes from 10.1.0.2: seq=14 ttl=63 time=213.639 ms
+1398 bytes from 10.1.0.2: seq=15 ttl=63 time=215.147 ms
+1398 bytes from 10.1.0.2: seq=16 ttl=63 time=222.662 ms
+1398 bytes from 10.1.0.2: seq=17 ttl=63 time=217.039 ms
+1398 bytes from 10.1.0.2: seq=19 ttl=63 time=212.998 ms
+1398 bytes from 10.1.0.2: seq=21 ttl=63 time=209.389 ms
+1398 bytes from 10.1.0.2: seq=22 ttl=63 time=212.210 ms
+1398 bytes from 10.1.0.2: seq=23 ttl=63 time=210.986 ms
+1398 bytes from 10.1.0.2: seq=24 ttl=63 time=214.752 ms
+1398 bytes from 10.1.0.2: seq=25 ttl=63 time=220.483 ms
+1398 bytes from 10.1.0.2: seq=29 ttl=63 time=213.324 ms
+1398 bytes from 10.1.0.2: seq=30 ttl=63 time=221.090 ms
+1398 bytes from 10.1.0.2: seq=31 ttl=63 time=220.693 ms
+1398 bytes from 10.1.0.2: seq=32 ttl=63 time=217.085 ms
+1398 bytes from 10.1.0.2: seq=33 ttl=63 time=220.475 ms
+1398 bytes from 10.1.0.2: seq=34 ttl=63 time=209.465 ms
+1398 bytes from 10.1.0.2: seq=35 ttl=63 time=221.829 ms
+1398 bytes from 10.1.0.2: seq=36 ttl=63 time=215.862 ms
+1398 bytes from 10.1.0.2: seq=37 ttl=63 time=221.802 ms
+1398 bytes from 10.1.0.2: seq=38 ttl=63 time=209.851 ms
+1398 bytes from 10.1.0.2: seq=39 ttl=63 time=211.833 ms
+1398 bytes from 10.1.0.2: seq=40 ttl=63 time=181.004 ms
+1398 bytes from 10.1.0.2: seq=41 ttl=63 time=175.391 ms
+1398 bytes from 10.1.0.2: seq=44 ttl=63 time=51.054 ms
+1398 bytes from 10.1.0.2: seq=45 ttl=63 time=195.521 ms
+1398 bytes from 10.1.0.2: seq=46 ttl=63 time=211.528 ms
+1398 bytes from 10.1.0.2: seq=47 ttl=63 time=214.577 ms
+1398 bytes from 10.1.0.2: seq=48 ttl=63 time=220.112 ms
+1398 bytes from 10.1.0.2: seq=49 ttl=63 time=217.026 ms
+
+--- 10.1.0.2 ping statistics ---
+50 packets transmitted, 37 packets received, 26% packet loss
+round-trip min/avg/max = 51.054/203.765/222.662 ms
+
+Delay from UE to dn_vcam
+bhu@dpdk3:~$ docker exec -it ue4000 ping -I 10.140.0.3 -c 50 -i 1 -s 1390 172.25.192.3
+PING 172.25.192.3 (172.25.192.3) from 10.140.0.3 : 1390(1418) bytes of data.
+1398 bytes from 172.25.192.3: icmp_seq=1 ttl=63 time=70.5 ms
+1398 bytes from 172.25.192.3: icmp_seq=2 ttl=63 time=67.4 ms
+1398 bytes from 172.25.192.3: icmp_seq=3 ttl=63 time=63.8 ms
+1398 bytes from 172.25.192.3: icmp_seq=4 ttl=63 time=60.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=5 ttl=63 time=57.3 ms
+1398 bytes from 172.25.192.3: icmp_seq=6 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=7 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=8 ttl=63 time=55.7 ms
+1398 bytes from 172.25.192.3: icmp_seq=9 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=10 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=11 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=12 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=13 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=14 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=15 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=16 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=17 ttl=63 time=55.8 ms
+1398 bytes from 172.25.192.3: icmp_seq=18 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=19 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=20 ttl=63 time=57.5 ms
+1398 bytes from 172.25.192.3: icmp_seq=21 ttl=63 time=56.0 ms
+1398 bytes from 172.25.192.3: icmp_seq=23 ttl=63 time=57.3 ms
+1398 bytes from 172.25.192.3: icmp_seq=24 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=25 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=26 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=27 ttl=63 time=51.8 ms
+1398 bytes from 172.25.192.3: icmp_seq=30 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=31 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=32 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=33 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=34 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=35 ttl=63 time=55.9 ms
+1398 bytes from 172.25.192.3: icmp_seq=36 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=37 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=39 ttl=63 time=56.1 ms
+1398 bytes from 172.25.192.3: icmp_seq=40 ttl=63 time=56.0 ms
+1398 bytes from 172.25.192.3: icmp_seq=41 ttl=63 time=56.2 ms
+1398 bytes from 172.25.192.3: icmp_seq=42 ttl=63 time=44.0 ms
+1398 bytes from 172.25.192.3: icmp_seq=43 ttl=63 time=64.0 ms
+1398 bytes from 172.25.192.3: icmp_seq=44 ttl=63 time=62.4 ms
+1398 bytes from 172.25.192.3: icmp_seq=45 ttl=63 time=61.4 ms
+1398 bytes from 172.25.192.3: icmp_seq=47 ttl=63 time=58.5 ms
+1398 bytes from 172.25.192.3: icmp_seq=49 ttl=63 time=55.7 ms
+1398 bytes from 172.25.192.3: icmp_seq=50 ttl=63 time=55.9 ms
+
+--- 172.25.192.3 ping statistics ---
+50 packets transmitted, 44 received, 12% packet loss, time 49144ms
+rtt min/avg/max/mdev = 43.985/57.082/70.465/3.912 ms
+
+Delay from dn_vctl to ue
+bhu@dpdk4:~$ docker exec -it dn_vctl ping -I 172.25.192.4 -c 50 -i 1 -s 1390 10.141.0.3
+PING 10.141.0.3 (10.141.0.3) from 172.25.192.4: 1390 data bytes
+1398 bytes from 10.141.0.3: seq=0 ttl=63 time=1.212 ms
+1398 bytes from 10.141.0.3: seq=1 ttl=63 time=0.966 ms
+1398 bytes from 10.141.0.3: seq=2 ttl=63 time=0.636 ms
+1398 bytes from 10.141.0.3: seq=3 ttl=63 time=0.584 ms
+1398 bytes from 10.141.0.3: seq=4 ttl=63 time=0.575 ms
+1398 bytes from 10.141.0.3: seq=5 ttl=63 time=0.567 ms
+1398 bytes from 10.141.0.3: seq=6 ttl=63 time=0.609 ms
+1398 bytes from 10.141.0.3: seq=7 ttl=63 time=0.650 ms
+1398 bytes from 10.141.0.3: seq=8 ttl=63 time=0.579 ms
+1398 bytes from 10.141.0.3: seq=9 ttl=63 time=0.617 ms
+1398 bytes from 10.141.0.3: seq=10 ttl=63 time=0.499 ms
+1398 bytes from 10.141.0.3: seq=11 ttl=63 time=0.553 ms
+1398 bytes from 10.141.0.3: seq=12 ttl=63 time=0.579 ms
+1398 bytes from 10.141.0.3: seq=13 ttl=63 time=0.622 ms
+1398 bytes from 10.141.0.3: seq=14 ttl=63 time=0.972 ms
+1398 bytes from 10.141.0.3: seq=15 ttl=63 time=1.069 ms
+1398 bytes from 10.141.0.3: seq=16 ttl=63 time=1.407 ms
+1398 bytes from 10.141.0.3: seq=17 ttl=63 time=1.087 ms
+1398 bytes from 10.141.0.3: seq=18 ttl=63 time=1.170 ms
+1398 bytes from 10.141.0.3: seq=19 ttl=63 time=0.999 ms
+1398 bytes from 10.141.0.3: seq=20 ttl=63 time=1.126 ms
+1398 bytes from 10.141.0.3: seq=21 ttl=63 time=0.618 ms
+1398 bytes from 10.141.0.3: seq=22 ttl=63 time=0.588 ms
+1398 bytes from 10.141.0.3: seq=23 ttl=63 time=0.545 ms
+1398 bytes from 10.141.0.3: seq=24 ttl=63 time=0.456 ms
+1398 bytes from 10.141.0.3: seq=25 ttl=63 time=0.530 ms
+1398 bytes from 10.141.0.3: seq=26 ttl=63 time=0.936 ms
+1398 bytes from 10.141.0.3: seq=27 ttl=63 time=0.921 ms
+1398 bytes from 10.141.0.3: seq=28 ttl=63 time=1.146 ms
+1398 bytes from 10.141.0.3: seq=29 ttl=63 time=1.063 ms
+1398 bytes from 10.141.0.3: seq=30 ttl=63 time=0.905 ms
+1398 bytes from 10.141.0.3: seq=31 ttl=63 time=0.876 ms
+1398 bytes from 10.141.0.3: seq=32 ttl=63 time=1.043 ms
+1398 bytes from 10.141.0.3: seq=33 ttl=63 time=1.012 ms
+1398 bytes from 10.141.0.3: seq=34 ttl=63 time=1.102 ms
+1398 bytes from 10.141.0.3: seq=35 ttl=63 time=1.192 ms
+1398 bytes from 10.141.0.3: seq=36 ttl=63 time=1.701 ms
+1398 bytes from 10.141.0.3: seq=37 ttl=63 time=0.955 ms
+1398 bytes from 10.141.0.3: seq=38 ttl=63 time=1.626 ms
+1398 bytes from 10.141.0.3: seq=39 ttl=63 time=0.749 ms
+1398 bytes from 10.141.0.3: seq=40 ttl=63 time=1.072 ms
+1398 bytes from 10.141.0.3: seq=41 ttl=63 time=0.990 ms
+1398 bytes from 10.141.0.3: seq=42 ttl=63 time=1.085 ms
+1398 bytes from 10.141.0.3: seq=43 ttl=63 time=1.039 ms
+1398 bytes from 10.141.0.3: seq=44 ttl=63 time=1.120 ms
+1398 bytes from 10.141.0.3: seq=45 ttl=63 time=0.966 ms
+1398 bytes from 10.141.0.3: seq=46 ttl=63 time=0.943 ms
+1398 bytes from 10.141.0.3: seq=47 ttl=63 time=1.357 ms
+1398 bytes from 10.141.0.3: seq=48 ttl=63 time=0.927 ms
+1398 bytes from 10.141.0.3: seq=49 ttl=63 time=1.109 ms
+
+--- 10.141.0.3 ping statistics ---
+50 packets transmitted, 50 packets received, 0% packet loss
+round-trip min/avg/max = 0.456/0.913/1.701 ms
+
+
