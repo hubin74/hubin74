@@ -1090,3 +1090,5 @@ snssai_dnn         dir  supi             port   send-CPU  recv-CPU  send-Mbps  r
 01000000_internet  DL>  TOTAL            *      _         _         _          538.78
 04000000_vcam      <UL  TOTAL            *      _         _         _          972.717
 04000000_vctl      DL>  TOTAL            *      _         _         _          1305.731
+
+
