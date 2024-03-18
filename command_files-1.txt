@@ -1,0 +1,536 @@
+netperf:
+docker exec -it ue1 netperf -H 192.168.15.60 -L 192.168.6.1 -l 100 -t TCP_RR -w 1ms -b 1 -v 2 -- -o min_latency,mean_latency,max_latency,stddev_latency,transaction_rate
+docker exec -it ue1 netperf -H 192.168.15.60 -L 192.168.6.1 -l 100 -t UDP_RR -- -R 1 -m 1024 -o min_latency,mean_latency,max_latency,stddev_latency,transaction_rate
+
+iperf3
+docker exec -it ue1 iperf3 -B 192.168.6.1 -c 192.168.15.60 -u -b 400M -t 1000
+
+      docker run -d --name iperf_${DNN}_${PORT}_s --network container:$DNCT networkstatic/iperf3 --forceflush -B $DNIP -p $PORT -s
+      CRUN=$CRUN"; docker run -d --name iperf_${DNN}_${PORT}_c --network container:$UECT networkstatic/iperf3 --forceflush -B $UEIP -p $PORT --cport $PORT -c $DNIP $*"
+      PORT=$((PORT+1))
+
+vcam traffic
+solarfare1:      docker run -d --name iperf_vcam_20000_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.194.3 -p 20000 -s
+dkdp2:           docker run -d --name iperf_vcam_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.140.0.X -p 20000 --cport 20000 -c 172.25.194.3 -t 10000 -u -b 20M
+
+vctl traffic
+solarfare1:      docker run -d --name iperf_vctl_20000_s --network container:dn_vctl networkstatic/iperf3 --forceflush -B 172.25.194.4 -p 20000 -s
+dkdp2:           docker run -d --name iperf_vctl_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.141.0.X -p 20000 --cport 20000 -c 172.25.194.4 -t 10000 -u -b 20M -R
+
+internet_up traffic
+solarfare2:      docker run -d --name iperf_internet_20000_s --network container:dn_internet networkstatic/iperf3 --forceflush -B 172.25.194.2 -p 20000 -s
+dkdp2:           docker run -d --name iperf_internet_20000_c --network container:ue1000 networkstatic/iperf3 --forceflush -B 10.1.0.X -p 20000 --cport 20000 -c 172.25.194.2 -t 10000 -u -b 20M
+
+vctl traffic
+solarfare2:      docker run -d --name iperf_internet_21000_s --network container:dn_internet networkstatic/iperf3 --forceflush -B 172.25.194.2 -p 21000 -s
+dkdp2:           docker run -d --name iperf_internet_21000_c --network container:ue1000 networkstatic/iperf3 --forceflush -B 10.1.0.X -p 21000 --cport 21000 -c 172.25.194.2 -t 10000 -u -b 20M -R
+
+In a multi-host deployment, DN and UE containers may be placed on different machines.
+In this case, it is necessary to insert -H ssh://host flag to these commands for accessing the remote Docker Engines.
+
+iperf3 --forceflush -B 172.25.194.3 -p 20005 -s
+iperf3 --forceflush -B 10.140.0.1 -p 20000 --cport 20000 -c 172.25.194.3 -t 10000 -u -b 20M
+
+
+ 228296 ?        Ss     0:02 iperf3 --forceflush -B 172.25.194.3 -p 20000 -s
+ 228453 ?        Ss     0:02 iperf3 --forceflush -B 172.25.194.3 -p 20001 -s
+ 228532 ?        Ss     0:03 iperf3 --forceflush -B 172.25.194.3 -p 20002 -s
+ 228631 ?        Ss     0:03 iperf3 --forceflush -B 172.25.194.3 -p 20003 -s
+ 228708 ?        Ss     0:03 iperf3 --forceflush -B 172.25.194.3 -p 20004 -s
+ 228811 ?        Ss     0:03 iperf3 --forceflush -B 172.25.194.3 -p 20005 -s
+ 228968 ?        Ss     0:10 iperf3 --forceflush -B 10.140.0.1 -p 20000 --cport 20000 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229018 ?        Ss     0:10 iperf3 --forceflush -B 10.140.0.2 -p 20001 --cport 20001 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229067 ?        Rs     0:08 iperf3 --forceflush -B 10.140.0.3 -p 20002 --cport 20002 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229116 ?        Ss     0:08 iperf3 --forceflush -B 10.140.0.4 -p 20003 --cport 20003 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229163 ?        Ss     0:08 iperf3 --forceflush -B 10.140.0.5 -p 20004 --cport 20004 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229210 ?        Ss     0:09 iperf3 --forceflush -B 10.140.0.6 -p 20005 --cport 20005 -c 172.25.194.3 -t 10000 -u -b 20M
+ 229345 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21000 -s
+ 229423 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21001 -s
+ 229498 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21002 -s
+ 229600 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21003 -s
+ 229676 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21004 -s
+ 229750 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21005 -s
+ 229879 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21006 -s
+ 230010 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21007 -s
+ 230112 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21008 -s
+ 230188 ?        Ss     0:02 iperf3 --forceflush -B 172.25.194.2 -p 21009 -s
+ 230264 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21010 -s
+ 230340 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.2 -p 21011 -s
+ 230391 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.1 -p 21000 --cport 21000 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230439 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.2 -p 21001 --cport 21001 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230490 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.3 -p 21002 --cport 21002 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230540 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.4 -p 21003 --cport 21003 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230591 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.5 -p 21004 --cport 21004 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230642 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.6 -p 21005 --cport 21005 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230691 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.7 -p 21006 --cport 21006 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230742 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.8 -p 21007 --cport 21007 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230790 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.9 -p 21008 --cport 21008 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230838 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.10 -p 21009 --cport 21009 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230884 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.11 -p 21010 --cport 21010 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 230932 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.12 -p 21011 --cport 21011 -c 172.25.194.2 -t 10000 -u -b 10M -R
+ 231140 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20000 -s
+ 231294 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20001 -s
+ 231370 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20002 -s
+ 231471 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20003 -s
+ 231546 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20004 -s
+ 231652 ?        Ss     0:01 iperf3 --forceflush -B 172.25.194.4 -p 20005 -s
+ 231814 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.1 -p 20000 --cport 20000 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 231862 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.2 -p 20001 --cport 20001 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 231915 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.3 -p 20002 --cport 20002 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 231967 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.4 -p 20003 --cport 20003 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 232016 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.5 -p 20004 --cport 20004 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 232064 ?        Ss     0:00 iperf3 --forceflush -B 10.141.0.6 -p 20005 --cport 20005 -c 172.25.194.4 -t 10000 -u -b 20M -R
+ 232182 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20000 -s
+ 232258 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20001 -s
+ 232332 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20002 -s
+ 232432 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20003 -s
+ 232510 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20004 -s
+ 232586 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20005 -s
+ 232714 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20006 -s
+ 232841 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20007 -s
+ 232949 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20008 -s
+ 233023 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20009 -s
+ 233103 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20010 -s
+ 233179 ?        Ss     0:00 iperf3 --forceflush -B 172.25.194.2 -p 20011 -s
+ 233230 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.1 -p 20000 --cport 20000 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233278 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.2 -p 20001 --cport 20001 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233330 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.3 -p 20002 --cport 20002 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233379 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.4 -p 20003 --cport 20003 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233428 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.5 -p 20004 --cport 20004 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233476 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.6 -p 20005 --cport 20005 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233526 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.7 -p 20006 --cport 20006 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233574 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.8 -p 20007 --cport 20007 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233622 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.9 -p 20008 --cport 20008 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233670 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.10 -p 20009 --cport 20009 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233720 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.11 -p 20010 --cport 20010 -c 172.25.194.2 -t 10000 -u -b 10M
+ 233767 ?        Ss     0:00 iperf3 --forceflush -B 10.1.0.12 -p 20011 --cport 20011 -c 172.25.194.2 -t 10000 -u -b 10M
+
+
+
+
+ping
+docker exec -it ue1 ping -I uesimtun0 -c 1000 192.168.15.60
+
+docker exec -it ue1 ./nr-cli imsi-001011234567896
+docker exec -it gnb ./nr-cli UERANSIM-gnb-1-1-1
+
+
+
+docker update --memory=2g --memory-reservation=1g --cpus=1 --cpuset-cpus=2 --memory-swap -1 upf2
+docker stats upf1 --no-stream --format "{{ json . }}" | python3 -m json.tool
+docker stats --no-stream
+
+docker service update --limit-cpu 0 --limit-memory 0 --reserve-cpu 0 --reserve-memory 0 service_name
+docker stats
+
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+bc2ab7a727bf   ausf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d4ebc7d4c24f   upf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d8fb3ebe657c   hostnat   0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+172eca6fc424   smf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+fa52fed1ac07   ue1       0.16%     2.77MiB / 15.36GiB    0.02%     14.3kB / 4.99kB   1.21MB / 12.3kB   14
+995d62b570a5   amf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+90194b63093a   gnb       0.15%     3.305MiB / 15.36GiB   0.02%     29.4kB / 16.8kB   0B / 8.19kB       14
+e333c07d2a7e   upf_dn    0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+3a194c5ddeb9   udm       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+198df0b26f4e   amf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+167a264a5d86   smf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+5abe0b35dc0c   upf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+b84f3f97b405   igw1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+958f1c24b7a1   nssf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+731250e4b66b   igw2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+29e1d9f72e19   sql       0.03%     63.09MiB / 15.36GiB   0.40%     33.4kB / 29.9kB   11.4MB / 18.8MB   13
+65b0cb114a8a   ue2       0.17%     2.055MiB / 15.36GiB   0.01%     13.5kB / 4.92kB   0B / 16.4kB       14
+6211b2ec0647   nrf       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+
+
+share UPF1:
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+bc2ab7a727bf   ausf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d4ebc7d4c24f   upf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d8fb3ebe657c   hostnat   0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+172eca6fc424   smf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+fa52fed1ac07   ue1       80.71%    3.391MiB / 15.36GiB   0.02%     22.9kB / 1.48GB   1.21MB / 12.3kB   15
+995d62b570a5   amf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+90194b63093a   gnb       158.03%   3.711MiB / 15.36GiB   0.02%     2GB / 1.99GB      0B / 8.19kB       14
+e333c07d2a7e   upf_dn    0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+3a194c5ddeb9   udm       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+198df0b26f4e   amf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+167a264a5d86   smf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+5abe0b35dc0c   upf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+b84f3f97b405   igw1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+958f1c24b7a1   nssf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+731250e4b66b   igw2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+29e1d9f72e19   sql       0.01%     63.09MiB / 15.36GiB   0.40%     34.2kB / 29.9kB   11.4MB / 18.8MB   13
+65b0cb114a8a   ue2       80.95%    2.664MiB / 15.36GiB   0.02%     22.1kB / 526MB    0B / 16.4kB       15
+6211b2ec0647   nrf       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+
+two upf
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+bc2ab7a727bf   ausf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d4ebc7d4c24f   upf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+d8fb3ebe657c   hostnat   0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+172eca6fc424   smf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+fa52fed1ac07   ue1       100.56%   3.555MiB / 15.36GiB   0.02%     33.8kB / 6.07GB   1.21MB / 12.3kB   15
+995d62b570a5   amf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+90194b63093a   gnb       195.54%   3.926MiB / 15.36GiB   0.02%     9.83GB / 9.76GB   0B / 8.19kB       14
+e333c07d2a7e   upf_dn    0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+3a194c5ddeb9   udm       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+198df0b26f4e   amf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+167a264a5d86   smf2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+5abe0b35dc0c   upf1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+b84f3f97b405   igw1      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+958f1c24b7a1   nssf      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+731250e4b66b   igw2      0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+29e1d9f72e19   sql       0.01%     63.04MiB / 15.36GiB   0.40%     34.9kB / 29.9kB   11.4MB / 18.8MB   12
+65b0cb114a8a   ue2       98.82%    2.832MiB / 15.36GiB   0.02%     33kB / 3.76GB     0B / 16.4kB       15
+6211b2ec0647   nrf       0.00%     0B / 0B               0.00%     0B / 0B           0B / 0B           0
+
+
+Multi-Host
+
+docker compose up -d bridge $(yq '.services | keys | filter(test("^(dn|upf|gnb|ue)[_0-9]") | not) | .[]' compose.yml)
+docker compose up -d bridge $(yq '.services | keys | filter(test("^(dn|upf|gnb|ue)[_0-9]")) | .[]' compose.yml)
+
+docker compose up -d bridge $(yq '.services | keys | filter(test("^(dn_internet|upf1|gnb0|ue1000|ue1001)")) | .[]' compose.yml)
+docker compose up -d bridge $(yq '.services | keys | filter(test("^(dn_vcam|dn_vctl|upf140|upf141|gnb1|ue4000|ue4001)")) | .[]' compose.yml)
+
+The solution for Vxlan tunnel between VMs is invoking this command on each VM before staring the scenario:
+sudo ethtool --offload ens160 tx-checksum-ip-generic off
+
+bash generate.sh 20231109 --ran=ueransim --bridge=n2,vx,10.0.50.7,10.0.50.8,10.0.50.9   --bridge=n3,vx,10.0.50.7,10.0.50.8,10.0.50.9   --bridge=n4,vx,10.0.50.7,10.0.50.8,10.0.50.9 --bridge=air,vx,10.0.50.7,10.0.50.8,10.0.50.9
+
+bash generate.sh 20231114 --ran=ueransim --bridge=n2,vx,10.0.50.7,10.0.50.8,10.0.50.9   --bridge=n3,vx,10.0.50.7,10.0.50.8,10.0.50.9   --bridge=n4,vx,10.0.50.7,10.0.50.8,10.0.50.9  --bridge=n6,vx,10.0.50.7,10.0.50.8,10.0.50.9  --bridge=air,vx,10.0.50.7,10.0.50.8,10.0.50.9
+
+eval `ssh-agent -s` && ssh-add
+rclone sync ~/compose/20231117 :sftp:compose/20231117 --sftp-host=10.0.50.8
+eval `ssh-agent -k`
+
+
+Measurement tools (data generator):
+iperf3
+netperf
+iptraf
+speedometer
+
+
+cd ~/5gdeploy
+for UECT in $(docker ps --format='{{.Names}}' | grep '^ue1'); do
+  corepack pnpm -s phoenix-rpc --host=$UECT ue-register --dnn=internet
+done
+for UECT in $(docker ps --format='{{.Names}}' | grep '^ue4'); do
+  corepack pnpm -s phoenix-rpc --host=$UECT ue-register --dnn=vcam --dnn=vctl
+done
+
+ns-3 3GPP HTTP application
+ns-3 3GPP HTTP applications simulate web browsing traffic based on a commonly used 3GPP model in standardization.
+See 5gdeploy/docker/ns3http/README.md for more explanation on how this container works and its optional command line flags.
+
+docker run -d --name iperf_vcam_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.140.0.X -p 20000 --cport 20000 -c 172.25.194.3 -t 10000 -u -b 20M
+
+# start 3GPP HTTP server in Data Network 'internet'
+docker run -d --name ns3http_internet --cap-add=NET_ADMIN --device /dev/net/tun \
+  --network container:dn_internet -e NS_LOG=ThreeGppHttpServer \
+  5gdeploy.localhost/ns3http 0 n6 --listen
+
+#ns3video server
+docker run -d --name ns3video_vcam --cap-add=NET_ADMIN --device /dev/net/tun \
+  --network container:dn_vcam -e NS_LOG=EvalvidServer \
+  5gdeploy.localhost/ns3video 0 n6 --listen
+  
+# start 3GPP HTTP clients in ue1000
+SERVER=$(docker exec dn_internet ip -j route get 10.1.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3http_ue1000 --cap-add=NET_ADMIN --device /dev/net/tun \
+  --network container:ue1000 -e NS_LOG=ThreeGppHttpClient \
+  5gdeploy.localhost/ns3http 0 10.1.0.0/16 --connect=$SERVER --clients=10
+
+# ns3video clients in ue4000
+SERVER=$(docker exec dn_vcam ip -j route get 10.140.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3video_ue4000 --cap-add=NET_ADMIN --device /dev/net/tun \
+  --network container:ue4000 -e NS_LOG=EvalvidClient \
+  5gdeploy.localhost/ns3video 0 10.140.0.0/16 --connect=$SERVER
+  
+# gather logs and stop applications
+docker logs ns3http_internet &>ns3http_internet.log
+docker logs ns3http_ue1000 &>ns3http_ue1000.log
+docker rm -f ns3http_internet ns3http_ue1000
+
+
+ns3video --tap-if=ns3tap0 --tap-ip=172.21.0.1 --tap-mask=255.255.255.0 --app-ip=172.21.0.2 0 n6 --listen
+
+
+
+
+In a multi-host deployment, DN and UE containers may be placed on different machines.
+In this case, it is necessary to insert -H ssh://host flag to these commands for accessing the remote Docker Engines.
+
+docker run -d --name iperf_internet_21000_s --network container:dn_internet networkstatic/iperf3 --forceflush -B 172.25.194.2 -p 21000 -s
+
+
+5giperf3 each iperf3/*.json
+for P in vcam_20 vctl_20 internet_20 internet_21; do echo $P $(5giperf3 total iperf3/$P*_c.json); donw
+
+
+
+    
+
+
+	
+Teardown any 5G scenarios and traffic generators you may be running. docker ps -a must be empty.
+	
+SSH into all three machines.
+	
+In each machine, set an IP address for the N3 port.
+	
+
+		
+Run ip link and compare the MAC address against what's written in scenario environment file 20231017.env, to determine its current network interface name.
+		
+Verify that the network interfaces are UP. If not, run sudo ip link set eth1 up to bring them up (substitute eth1 with the network interface name).
+		
+Set the IP address on primary host (dpdk2, switchport 49): sudo ip addr add 192.168.60.49/24 dev eth1
+		 (substitute eth1 with the network interface name).
+		
+Set the IP address on UPF1 host (solarflare2, switchport 2): sudo ip addr add 192.168.60.2/24 dev eth1
+		 (substitute eth1 with the network interface name).
+		
+Set the IP address on UPF4 host (solareflare1, switchport 1): sudo ip addr add 192.168.60.1/24 dev eth1
+		 (substitute eth1 with the network interface name).
+	
+	
+	
+Start an iperf3 server on UPF1 and UPF4 hosts: iperf3 -s
+	
+To test uplink rate-shape, start an iperf3 client on the primary host, targeting one iperf3 server at a time:
+	
+
+		
+Run these two commands, separately (stop one before running the other):
+		iperf3 -c 192.168.60.2 -u -b 3G -R -t 60
+		iperf3 -c 192.168.60.1 -u -b 3G -R -t 60
+		 
+		
+Looking at the receiver throughput shown on the iperf3 client: they should be slightly under the configured rate-shape.
+		If they are over the rate-shape setting, it means the rate-shape is not configured correctly.
+	
+	
+	
+To test uplink QoS, start two iperf3 clients on the primary host, targeting both iperf3 servers simultaneously:
+	
+
+		
+Run this command on the primary host, which sends traffic from UPF1 to the primary host:
+		iperf3 -c 192.168.60.2 -u -b 3G -R -t 300
+		 
+		
+Take a note of the receiver throughput.
+		
+Open another SSH console to the primary host, run this command, which sends traffic from UPF4 to the primary host:
+		iperf3 -c 192.168.60.1 -u -b 200M -R -t 60
+		
+Since UPF4 uplink should have a higher priority than UPF1 uplink, you should see the first iperf3 client receiver throughput reduced by a little more than 200Mbps, while the second iperf3 client receiver throughput at 200Mbps.
+		
+If the second iperf3 client fails to connect or has a receiver throughput significantly lower than 200Mbps, it means the QoS priority is not configured correctly.
+	
+	
+
+docker exec dn_internet nmap -sn 10.1.0.0/24
+docker exec dn_vcam nmap -sn 10.140.0.0/24
+docker exec dn_vctl nmap -sn 10.141.0.0/24
+
+Start traffic generators:
+
+start_iperf3_ue_dn() {
+  local DNN=$1
+  local UESUBNET=$2
+  local PORT=$3
+  shift 3
+  local DNCT=dn_${DNN}
+  local DNIP=$(docker exec $DNCT ip -j route get ${UESUBNET%/*} | jq -r '.[0].prefsrc')
+  local CRUN=': '
+  for I in $(seq 0 9999); do
+    local UECT=ue$I
+    if ! docker inspect $UECT &>/dev/null; then
+      break
+    fi
+    local UEIPS=$(docker exec $UECT ip -j addr show to ${UESUBNET} | jq -r '.[].addr_info[].local')
+    if [[ -z $UEIPS ]]; then
+      continue
+    fi
+    for UEIP in $UEIPS; do
+      docker run -d --name iperf3_${DNN}_${PORT}_s --network container:$DNCT networkstatic/iperf3 --forceflush -B $DNIP -p $PORT -s
+      CRUN=$CRUN"; docker run -d --name iperf3_${DNN}_${PORT}_c --network container:$UECT networkstatic/iperf3 --forceflush -B $UEIP -p $PORT --cport $PORT -c $DNIP $*"
+      PORT=$((PORT+1))
+    done
+  done
+  sleep 10
+  bash -c "$CRUN"
+}
+
+start_iperf3_ue_dn vcam 10.140.0.0/16 20000 -t 300 -u -b 7M
+start_iperf3_ue_dn vctl 10.141.0.0/16 20000 -t 300 -u -b 50K -R
+start_iperf3_ue_dn internet 10.1.0.0/16 20000 -t 300 -u -b 15M
+start_iperf3_ue_dn internet 10.1.0.0/16 21000 -t 300 -u -b 50M -R
+
+Stop traffic generators:
+
+# stop and gather logs
+for CT in $(docker ps -a --format=json | jq -r '.Names | select(. | startswith("iperf3"))' | sort -V); do
+  echo '----------------------------------------------------------------'
+  echo $CT
+  docker kill --signal=INT $CT
+  docker logs $CT
+  docker rm -f $CT
+done &>~/compose/20230817/iperf3.log
+
+# stop without gathering logs
+docker rm -f $(docker ps -a --format=json | jq -r '.Names | select(. | startswith("iperf3"))')
+
+Empty docker system:
+sudo docker system prune -a -f
+
+
+docker build --pull -t 5gdeploy.localhost/ns3video docker/ns3video
+./generate.sh 20231017-video +gnbs=1 +phones=4 +vehicles=4
+
+cd ~/5gdeploy
+for UECT in $(docker ps --format='{{.Names}}' | grep '^ue1'); do
+  corepack pnpm -s phoenix-rpc --host=$UECT ue-register --dnn=internet
+done
+for UECT in $(docker ps --format='{{.Names}}' | grep '^ue4'); do
+  corepack pnpm -s phoenix-rpc --host=$UECT ue-register --dnn=vcam --dnn=vctl
+done
+
+dn_vcam --> ue400X
+ns3video server
+docker run -d --name ns3video_vcam_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 n6 --listen --port=4000
+docker run -d --name ns3video_vcam_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 1 n6 --listen --port=4001
+
+ns3video client
+SERVER=$(docker exec dn_vcam ip -j route get 10.140.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --connect=$SERVER --port=4000
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --connect=$SERVER --port=4001
+
+ue400X --> dn_vcam
+ns3video server
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4000
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4001
+
+docker run -d --name ns3video_ue4002_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4002
+or
+docker run -d --name ns3video_ue4002_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4000
+
+ns3video client ue4000: ip 10.140.0.1, ue4001: ip 10.140.0.3, ue4002: ip 10.140.0.2
+docker run -d --name ns3video_vcam_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 n6 --connect=10.140.0.1 --port=4000
+docker run -d --name ns3video_vcam_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 1 n6 --connect=10.140.0.3 --port=4001
+
+docker run -d --name ns3video_vcam_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 2 n6 --connect=10.140.0.2 --port=4002
+or
+docker run -d --name ns3video_vcam_P4000_ue4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 2 n6 --connect=10.140.0.2 --port=4000
+
+
+vcam
+docker -H ssh://solarflare1 run -d --name ns3video_vcam_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 n6 --listen --port=4000
+
+vctl
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 n6 --listen --st-file=st_highway_cif_4.st --port=4000
+SERVER=$(docker -H ssh://solarflare1 exec dn_vctl ip -j route get 10.141.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4000
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 1 n6 --listen --st-file=st_highway_cif_4.st --port=4001
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4001
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 2 n6 --listen --st-file=st_highway_cif_4.st --port=4002
+docker run -d --name ns3video_ue4002_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4002
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 3 n6 --listen --st-file=st_highway_cif_4.st --port=4003
+docker run -d --name ns3video_ue4003_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4003 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4003
+
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 n6 --listen --st-file=st_highway_cif_5.st --port=4000
+SERVER=$(docker -H ssh://solarflare1 exec dn_vctl ip -j route get 10.141.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4000
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 1 n6 --listen --st-file=st_highway_cif_5.st --port=4001
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4001
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 2 n6 --listen --st-file=st_highway_cif_5.st --port=4002
+docker run -d --name ns3video_ue4002_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4002
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 3 n6 --listen --st-file=st_highway_cif_5.st --port=4003
+docker run -d --name ns3video_ue4003_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4003 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4003
+
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 n6 --listen --port=4000
+SERVER=$(docker -H ssh://solarflare1 exec dn_vctl ip -j route get 10.141.0.0 | jq -r '.[0].prefsrc')
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --connect=$SERVER --port=4000
+
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --listen --st-file=st_highway_cif_4.st --port=4000
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --listen --st-file=st_highway_cif_4.st --port=4001
+docker run -d --name ns3video_ue4002_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --listen --st-file=st_highway_cif_4.st --port=4002
+docker run -d --name ns3video_ue4003_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4003 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.141.0.0/16 --listen --st-file=st_highway_cif_4.st --port=4003
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 n6 --connect=10.141.0.2 --port=4000
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 1 n6 --connect=10.141.0.3 --port=4001
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 2 n6 --connect=10.141.0.4 --port=4002
+docker -H ssh://solarflare1 run -d --name ns3video_vctl_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vctl -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 3 n6 --connect=10.141.0.1 --port=4003
+
+
+docker run -d --name ns3video_ue4000_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4000 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4000
+docker run -d --name ns3video_ue4001_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4001 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4001
+docker run -d --name ns3video_ue4002_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4002 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4002
+docker run -d --name ns3video_ue4003_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:ue4003 -e NS_LOG=EvalvidServer   5gdeploy.localhost/ns3video 0 10.140.0.0/16 --listen --port=4003
+docker -H ssh://solarflare1 run -d --name ns3video_vcam_P4000 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 0 n6 --connect=10.140.0.4 --port=4000
+docker -H ssh://solarflare1 run -d --name ns3video_vcam_P4001 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 1 n6 --connect=10.140.0.3 --port=4001
+docker -H ssh://solarflare1 run -d --name ns3video_vcam_P4002 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 2 n6 --connect=10.140.0.2 --port=4002
+docker -H ssh://solarflare1 run -d --name ns3video_vcam_P4003 --cap-add=NET_ADMIN --device /dev/net/tun   --network container:dn_vcam -e NS_LOG=EvalvidClient   5gdeploy.localhost/ns3video 3 n6 --connect=10.140.0.1 --port=4003
+
+
+sudo systemctl restart docker.service
+
+Possible compile.sh problem:
+Remove the spurious CR characters. You can do it with the following command:
+sed -i -e 's/\r$//' compile.sh
+
+tar czvf iperf3-47.5M.tar.gz iperf3-100M-*-150M-47.5M*
+
+
+
+            "Data": {
+                "LowerDir": "/home/docker/overlay2/120553538a2800aea367d264e03fe0d53d9b3193933395ef54eae194fe3be9bc-init/diff:/home/docker/overlay2/xip3skraur7eqp9t38rcuwy2u/diff:/home/docker/overlay2/vctzuqhjicwdblzf88qlkbepa/diff:/home/docker/overlay2/6n0p65drlzgbr6aop9dvgrsq4/diff:/home/docker/overlay2/5zu0aalccpo4c4n4gmet0owk4/diff:/home/docker/overlay2/2ezr5zre1l0mhi6w8ueo4672p/diff:/home/docker/overlay2/8vzgzqkwi2szvqoexeu8iwvqg/diff:/home/docker/overlay2/bh58xypnvubxmm1o18y3ohumw/diff:/home/docker/overlay2/wfafqjn1w1h9d18iubboqnsfi/diff:/home/docker/overlay2/kojkvf8jhzw024a18wqc9lvzw/diff:/home/docker/overlay2/nn80ng18ogmfwjtvbfzheiqf3/diff:/home/docker/overlay2/909afcffef98ac783e5cd78fbbdbd902e9e3000f5a4075931379109aa6ba0655/diff",
+                "MergedDir": "/home/docker/overlay2/120553538a2800aea367d264e03fe0d53d9b3193933395ef54eae194fe3be9bc/merged",
+                "UpperDir": "/home/docker/overlay2/120553538a2800aea367d264e03fe0d53d9b3193933395ef54eae194fe3be9bc/diff",
+                "WorkDir": "/home/docker/overlay2/120553538a2800aea367d264e03fe0d53d9b3193933395ef54eae194fe3be9bc/work"
+
+change the MTU value on the Linux network interface "dev"
+ifconfig dev mtu 9000
+
+
+./generate.sh 20231017 +gnbs=2 +phones=4 +vehicles=4   --dn-workers=0 --phoenix-upf-workers=2   --bridge=n3,vx,192.168.60.49,192.168.60.1,192.168.60.2   --bridge=n4,eth,smf=$N4_SMF,upf1=$N4_UPF1,upf4=$N4_UPF4   --place="upf1@$CTRL_UPF1(2-3)"   --place="dn_internet@$CTRL_UPF1"   --place="upf4@$CTRL_UPF4(2-3)"   --place="dn_v*@$CTRL_UPF4"   --place="*@$CPUSET_PRIMARY"
+
+
+Command to avoid exit:
+echo 'unset TMOUT' >> .bashrc
+
+find out which scenario is used:
+docker inspect amf | jq .[].Config.Labels
+or
+docker inspect amf | jq .[].Mounts
+
+
+docker exec -it ue1000 ping -I 10.1.0.4 -c 30 -i 1 -s 1390 172.25.192.2; sleep 3; docker exec -it ue1001 ping -I 10.1.0.3 -c 30 -i 1 -s 1390 172.25.192.2; sleep 3; docker exec -it ue1002 ping -I 10.1.0.2 -c 30 -i 1 -s 1390 172.25.192.2; sleep 3; docker exec -it ue1003 ping -I 10.1.0.1 -c 30 -i 1 -s 1390 172.25.192.2; sleep 3; docker exec -it ue4000 ping -I 10.140.0.1 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4001 ping -I 10.140.0.2 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4002 ping -I 10.140.0.3 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4003 ping -I 10.140.0.4 -c 30 -i 1 -s 1390 172.25.192.3
+
+docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.1; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.2; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.3; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.4; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.1; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.2; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.3; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.4
+
+
+
+
+
+docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.1; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.2; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.3; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.4; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.1; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.2; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.3; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.4
+
+docker exec -it ue4000 ping -I 10.140.0.1 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4001 ping -I 10.140.0.2 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4002 ping -I 10.140.0.3 -c 30 -i 1 -s 1390 172.25.192.3; sleep 3; docker exec -it ue4003 ping -I 10.140.0.4 -c 30 -i 1 -s 1390 172.25.192.3
+
+docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.1; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.2; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.3; sleep 3; docker exec -it dn_vctl ping -I 172.25.192.4 -c 30 -i 1 -s 1390 10.141.0.4; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.1; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.2; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.3; sleep 3; docker exec -it dn_internet ping -I 172.25.192.2 -c 30 -i 1 -s 1390 10.1.0.4
+
+
+vi ~/.docker/config.json
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://10.11.200.200:3131",
+      "httpsProxy": "http://10.11.200.200:3131",
+      "noProxy": "localhost,*.localhost"
+    }
+  }
+}
