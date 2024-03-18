@@ -1,0 +1,38 @@
+bhu@dpdk3:~/compose/20230817$ docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 100 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1014 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 200; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 100 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 200; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 100 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput;
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.99,110,1.05,918.66,1011.13
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.11,146,1.07,885.33,1364.67
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.18,156,1.08,883.43,1352.97
+bhu@dpdk3:~/compose/20230817$ docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 100 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 256 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 100; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 100 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 512 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.50,115,1.11,252.78,271.66
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.62,111,1.07,505.14,534.95
+bhu@dpdk3:~/compose/20230817$ docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 256 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 512 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.55,127,1.04,251.67,270.12
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.59,139,1.03,503.14,536.84
