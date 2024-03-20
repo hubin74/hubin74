@@ -36,3 +36,72 @@ Packet burst size is not compiled in.
 MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
 Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
 5,7.59,139,1.03,503.14,536.84
+
+
+
+bhu@dpdk3:~/compose/20230817$ docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 256 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 512 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1024 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 2ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 3ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 4ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 2ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 3ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 1000 -t UDP_STREAM -w 4ms -b 1 -v 2 -- -m 1390 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 1000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 10000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1024 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput; sleep 5000; docker exec -it ue1000 netperf -H 172.25.192.2 -L 10.1.0.1 -l 10000 -t UDP_STREAM -w 1ms -b 1 -v 2 -- -m 1024 -o min_latency,mean_latency,max_latency,stddev_latency,throughput,local_send_throughput
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+4,7.52,282,1.04,251.56,270.99
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.53,109,1.04,501.85,541.39
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.88,113,1.05,918.42,1034.55
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.10,109,1.05,886.62,1366.93
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.11,110,1.06,884.35,1364.65
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.17,121,1.06,887.21,1354.70
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.08,106,1.06,886.11,1370.33
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.14,133,1.06,883.62,1360.33
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.19,215,1.07,883.60,1352.57
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.14,120,1.05,883.81,1359.39
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.08,121,1.05,886.41,1369.99
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,8.00,703,1.05,917.91,1019.68
+Packet rate control is not compiled in.
+Packet burst size is not compiled in. 
+MIGRATED UDP STREAM TEST from 10.1.0.1 () port 0 AF_INET to 172.25.192.2 () port 0 AF_INET : demo
+Minimum Latency Microseconds,Mean Latency Microseconds,Maximum Latency Microseconds,Stddev Latency Microseconds,Throughput,Local Send Throughput
+5,7.99,270,1.05,917.92,1020.33
