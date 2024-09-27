@@ -13,6 +13,34 @@ vcam traffic
 solarfare1:      docker run -d --name iperf_vcam_20000_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.194.3 -p 20000 -s
 dkdp2:           docker run -d --name iperf_vcam_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.140.0.X -p 20000 --cport 20000 -c 172.25.194.3 -t 10000 -u -b 20M
 
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_20000_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 20000 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_20001_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 20001 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_20002_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 20002 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_20003_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 20003 -s
+docker run -d --name iperf_vcam_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.140.0.1 -p 20000 --cport 20000 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_20001_c --network container:ue4001 networkstatic/iperf3 --forceflush -B 10.140.0.2 -p 20001 --cport 20001 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_20002_c --network container:ue4002 networkstatic/iperf3 --forceflush -B 10.140.0.3 -p 20002 --cport 20002 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_20003_c --network container:ue4003 networkstatic/iperf3 --forceflush -B 10.140.0.4 -p 20003 --cport 20003 -c 172.25.193.3 -t 100 -u -b 285M
+
+docker rm -f iperf_vcam_20000_c iperf_vcam_20001_c iperf_vcam_20002_c iperf_vcam_20003_c
+docker -H ssh://10.11.200.58 rm -f iperf_vcam_20000_s iperf_vcam_20001_s iperf_vcam_20002_s iperf_vcam_20003_s
+
+
+port 3000X
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_30000_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 30000 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_30001_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 30001 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_30002_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 30002 -s
+docker -H ssh://10.11.200.58 run -d --name iperf_vcam_30003_s --network container:dn_vcam networkstatic/iperf3 --forceflush -B 172.25.193.3 -p 30003 -s
+docker run -d --name iperf_vcam_30000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.140.0.1 -p 30000 --cport 30000 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_30001_c --network container:ue4001 networkstatic/iperf3 --forceflush -B 10.140.0.2 -p 30001 --cport 30001 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_30002_c --network container:ue4002 networkstatic/iperf3 --forceflush -B 10.140.0.3 -p 30002 --cport 30002 -c 172.25.193.3 -t 100 -u -b 285M
+docker run -d --name iperf_vcam_30003_c --network container:ue4003 networkstatic/iperf3 --forceflush -B 10.140.0.4 -p 30003 --cport 30003 -c 172.25.193.3 -t 100 -u -b 285M
+
+docker rm -f iperf_vcam_30000_c iperf_vcam_30001_c iperf_vcam_30002_c iperf_vcam_30003_c
+docker -H ssh://10.11.200.58 rm -f iperf_vcam_30000_s iperf_vcam_30001_s iperf_vcam_30002_s iperf_vcam_30003_s
+
+
+
 vctl traffic
 solarfare1:      docker run -d --name iperf_vctl_20000_s --network container:dn_vctl networkstatic/iperf3 --forceflush -B 172.25.194.4 -p 20000 -s
 dkdp2:           docker run -d --name iperf_vctl_20000_c --network container:ue4000 networkstatic/iperf3 --forceflush -B 10.141.0.X -p 20000 --cport 20000 -c 172.25.194.4 -t 10000 -u -b 20M -R
